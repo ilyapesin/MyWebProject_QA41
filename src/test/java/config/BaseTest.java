@@ -28,8 +28,8 @@ public class BaseTest {
     @Parameters("browser")
     public void setUp(@Optional("firefox") String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
-            //WebDriverManager.chromedriver().setup();
-            WebDriverManager.chromedriver().browserVersion("121.0.6167.184").setup();
+            WebDriverManager.chromedriver().setup();
+//          WebDriverManager.chromedriver().browserVersion("122.0.6261.69").setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--lang=en");
             //options.addArguments("--headless");
@@ -59,7 +59,7 @@ public class BaseTest {
     public void tearDown() {
         WebDriver driver = getDriver(); // Получаем текущий экземпляр WebDriver с помощью метода getDriver().
         if (driver != null) { // Проверяем, что экземпляр драйвера не равен null.
-           // driver.quit(); // Если драйвер не равен null, то закрываем браузер с помощью метода quit().
+            // driver.quit(); // Если драйвер не равен null, то закрываем браузер с помощью метода quit().
             driverThreadLocal.remove(); // Удаляем текущий экземпляр WebDriver из объекта driverThreadLocal.
         }
     }
