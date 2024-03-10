@@ -19,7 +19,7 @@ public class MainPage extends BasePage{
             case "HOME": return (T) new HomePage(driver);
             case "ABOUT": return (T) new AboutPage(driver);
             case "LOGIN": return (T) new LoginPage(driver);
-            case "CONTACTS": return (T) new ContactsPage(driver);
+            case "ADD": return (T) new ContactsPage(driver);
             default: throw new IllegalArgumentException("Unknown top menu item"+topMenuItem);
         }
 

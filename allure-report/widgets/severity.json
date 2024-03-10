@@ -1,0 +1,1 @@
+[{"uid":"b44f2d6e01a058ef","name":"testSuccessfullyRegistration","time":{"start":1710085722920,"stop":1710085733114,"duration":10194},"status":"passed","severity":"normal"},{"uid":"45c4de2dc24e611c","name":"The test checks the empty field warning declaration.","time":{"start":1710083877508,"stop":1710083889778,"duration":12270},"status":"passed","severity":"normal"}]

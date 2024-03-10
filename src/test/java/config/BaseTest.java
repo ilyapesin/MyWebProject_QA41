@@ -26,7 +26,7 @@ public class BaseTest {
 
     @BeforeMethod
     @Parameters("browser")
-    public void setUp(@Optional("firefox") String browser) {
+    public void setUp(@Optional("chrome") String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
 //          WebDriverManager.chromedriver().browserVersion("122.0.6261.69").setup();
@@ -59,7 +59,7 @@ public class BaseTest {
     public void tearDown() {
         WebDriver driver = getDriver(); // Получаем текущий экземпляр WebDriver с помощью метода getDriver().
         if (driver != null) { // Проверяем, что экземпляр драйвера не равен null.
-            // driver.quit(); // Если драйвер не равен null, то закрываем браузер с помощью метода quit().
+            //driver.quit(); // Если драйвер не равен null, то закрываем браузер с помощью метода quit().
             driverThreadLocal.remove(); // Удаляем текущий экземпляр WebDriver из объекта driverThreadLocal.
         }
     }

@@ -37,9 +37,9 @@ public class LoginPage extends BasePage{
         return this;
     }
 
-    public LoginPage clickByRegistartionButton(){
+    public Alert clickByRegistartionButton(){
         registrationButton.click();
-        return this;
+        return getAlertIfPresent();
     }
     public BasePage clickByLoginButton(){
         loginButton.click();

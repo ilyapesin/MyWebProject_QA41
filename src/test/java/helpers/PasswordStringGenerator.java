@@ -26,7 +26,7 @@ public class PasswordStringGenerator {
         }
 
         // Генерируем один или более спецсимволов ([]!$_)
-        String specialChars = "[]!$_-";
+        String specialChars = "$&#";
         int specialCharsCount = 1 + random.nextInt(3); // Генерируем от 1 до 3 спецсимволов
         for (int i = 0; i < specialCharsCount; i++) {
             int index = random.nextInt(specialChars.length());
@@ -40,5 +40,6 @@ public class PasswordStringGenerator {
     public static void main(String[] args) {
         String generatedString = generateString();
         System.out.println("Generated String: " + generatedString);
+        System.out.println((char) ('a'+Math.random() * ('z' - 'a' + 1)));
     }
 }

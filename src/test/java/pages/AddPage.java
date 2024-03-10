@@ -33,8 +33,10 @@ public class AddPage extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 20), this);
     }
 
-    public void fillFormAndSave(Contact contact){
+    public void fillFormAndSave(Contact contact) throws InterruptedException {
+        nameField.click();
         nameField.sendKeys(contact.getName());
+        lastnameField.click();
         lastnameField.sendKeys(contact.getLastName());
         if(contact.getPhone().length()>=10 && contact.getPhone().length()<=15){
             phoneField.sendKeys(contact.getPhone());
@@ -44,10 +46,10 @@ public class AddPage extends BasePage{
         emailField.sendKeys(contact.getEmail());
         addressField.sendKeys(contact.getAddress());
         descriptionField.sendKeys(contact.getDescription());
-        saveButton = new WebDriverWait(driver, Duration.ofSeconds(5))
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions
                         .visibilityOfElementLocated(By.xpath("//b[contains(text(),'Save')]")));
-        saveButton.click();
+        element.click();
 
     }
 
