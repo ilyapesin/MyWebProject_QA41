@@ -15,6 +15,11 @@ import java.time.Duration;
 public class ContactsPage extends BasePage {
     @FindBy(xpath = "//button[contains(text(),'Sign')]")
     WebElement signOutButton;
+    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM']")
+    WebElement contactItem;
+    By contact=By.xpath("//div[@class='contact-item_card__2SOIM']");
+    By removeBtn=By.xpath("//button[.='Remove']");
+    By btnSignOut=By.xpath("//button");
 
     public ContactsPage(WebDriver driver) {
         setDriver(driver);
@@ -62,10 +67,36 @@ public class ContactsPage extends BasePage {
         boolean result = listContact.equals(contact); // Выполняется сравнение переданного объекта Contact с объектом listContact, созданным на основе данных, полученных со страницы.
         return result; // Метод возвращает результат сравнения в виде логического значения true или false.
     }
-    public boolean isElementPresent(By locator){
+    public boolean isElementPresent(){
 
-        return driver.findElements(locator).size()>0;
+        return driver.findElements(btnSignOut).size()>0;
 
 
     }
+    public int removeContact() throws InterruptedException {
+        int beforeContact=countContact();
+        driver.findElement(contact).click();
+        driver.findElement(removeBtn).click();
+        Thread.sleep(1000);
+        int afterContact=countContact();
+        int res=beforeContact-afterContact;
+        System.out.println(res);
+        return res;
+    }
+    public void removeContactAll() throws InterruptedException {
+        while(driver.findElements(contact).size()>0) {
+            removeContact();
+            Thread.sleep(3000);
+
+        }
+    }
+    public boolean isNoContact() {
+        return driver.findElements(contact).size()==0;
+    }
+
+    public int countContact() {
+
+        return driver.findElements(contact).size();
+    }
 }
+

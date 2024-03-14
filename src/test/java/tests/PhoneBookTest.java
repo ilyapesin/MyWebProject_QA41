@@ -16,6 +16,7 @@ import pages.ContactsPage;
 import pages.LoginPage;
 import pages.MainPage;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class PhoneBookTest extends BaseTest {
@@ -78,8 +79,50 @@ public class PhoneBookTest extends BaseTest {
                 .fillPasswordField(PasswordStringGenerator.generateString())
                 .clickByRegistartionButton();
         Allure.step("Step 3");
-        Assert.assertTrue(new ContactsPage().isElementPresent(By.xpath("//button")));
+        Assert.assertTrue(new ContactsPage(getDriver()).isElementPresent());
         TakeScreen.takeScreenshot("screenreg");
+    }
+    @Test
+    public void testRemoveContact() throws Exception {
+        Allure.description("User already exist. Login and add contact.!");
+        MainPage mainPage = new MainPage(getDriver());
+        Allure.step("Step 1");
+        LoginPage loginPage = mainPage.openTopMenu(TopMenuItem.LOGIN.toString());
+        Allure.step("Step 2");
+        loginPage.fillEmailField(PropertiesReader.getProperty("existingUserEmail"))
+                .fillPasswordField(PropertiesReader.getProperty("existingUserPassword"))
+                .clickByLoginButton();
+        Allure.step("Step 3");
+        ContactsPage contactsPage=new ContactsPage();
+        if(contactsPage.isNoContact()) {
+            mainPage.openTopMenu(TopMenuItem.ADD.toString());
+            AddPage addPage=new AddPage(getDriver());
+            Contact contact =new Contact(NameAndLastNameGenerator.generateName()
+                    ,NameAndLastNameGenerator.generateLastName()
+                    ,PhoneNumberGenerator.generatePhoneNumber()
+                    ,EmailGenerator.generateEmail(10,5,3)
+                    ,AddressGenerator.generateAddress()
+                    ,"New contact");
+            addPage.fillFormAndSave(contact);
+
+
+        }
+        int count = contactsPage.removeContact();
+        Assert.assertEquals(count,1);
+
+    }
+    @Test
+    public void testRemoveContactAll() throws IOException, InterruptedException {
+        MainPage mainPage = new MainPage(getDriver());
+        Allure.step("Step 1");
+        LoginPage loginPage = mainPage.openTopMenu(TopMenuItem.LOGIN.toString());
+        Allure.step("Step 2");
+        loginPage.fillEmailField(PropertiesReader.getProperty("existingUserEmail"))
+                .fillPasswordField(PropertiesReader.getProperty("existingUserPassword"))
+                .clickByLoginButton();
+        ContactsPage contactsPage=new ContactsPage(getDriver());
+        contactsPage.removeContactAll();
+        Assert.assertTrue((contactsPage.isNoContact()));
     }
 
 }
