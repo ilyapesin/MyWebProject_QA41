@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ContactsPage extends BasePage {
     @FindBy(xpath = "//button[contains(text(),'Sign')]")
@@ -75,18 +77,22 @@ public class ContactsPage extends BasePage {
     }
     public int removeContact() throws InterruptedException {
         int beforeContact=countContact();
-        driver.findElement(contact).click();
-        driver.findElement(removeBtn).click();
-        Thread.sleep(1000);
-        int afterContact=countContact();
-        int res=beforeContact-afterContact;
-        System.out.println(res);
-        return res;
+        //driver.findElement(contact).click();
+        clickContact();
+        //driver.findElement(removeBtn).click();
+        clickRemoveButton();
+        //Thread.sleep(1000);
+       // int afterContact=countContact();
+       // int res=beforeContact-afterContact;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions
+                .numberOfElementsToBe(contact, beforeContact - 1));
+        System.out.println(countContact());
+        return beforeContact-countContact();
     }
     public void removeContactAll() throws InterruptedException {
         while(driver.findElements(contact).size()>0) {
             removeContact();
-            Thread.sleep(3000);
 
         }
     }
@@ -98,5 +104,52 @@ public class ContactsPage extends BasePage {
 
         return driver.findElements(contact).size();
     }
+
+
+
+    public int deleteContactByPhoneNumberOrName(String phoneNumberOrName) {
+        List<WebElement> contactsList = getContactsList();
+        int initSize = contactsList.size();
+        try {
+            for (WebElement contact : contactsList) {
+                WebElement phoneNumberOrNameData = contact.findElement(By
+                        .xpath("//h2[text()='"+phoneNumberOrName+"'] | //h3[text()='"+phoneNumberOrName+"']"));
+                if (phoneNumberOrNameData.isDisplayed()) {
+                    phoneNumberOrNameData.click();
+                    clickRemoveButton();
+                    break; // Для прекращения цикла после удаления контакта
+                }
+            }}catch (NoSuchElementException exception){exception.fillInStackTrace();
+            System.out.println("Item with phone number "+phoneNumberOrName+" was not found. ");}
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions
+                .numberOfElementsToBe(contact, initSize - 1));
+        System.out.println(initSize + " elements");
+        return initSize-getContactsListSize();
+    }
+
+    protected List<WebElement> getContactsList(){
+        return driver.findElements(contact);
+    }
+    public int getContactsListSize(){
+        return getContactsList().size();
+    }
+    public void clickRemoveButton() {
+        WebElement removeButton = driver.findElement(removeBtn);
+        removeButton.click();
+    }
+
+    public void clickContact(){
+      WebElement element=  driver.findElement(contact);
+      element.click();
+    }
+    public LoginPage logOut(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        signOutButton = wait.until(ExpectedConditions
+                .visibilityOfElementLocated(By.xpath("//button[contains(text(),'Sign')]")));
+        signOutButton.click();
+        return new LoginPage(driver);
+    }
+
 }
 

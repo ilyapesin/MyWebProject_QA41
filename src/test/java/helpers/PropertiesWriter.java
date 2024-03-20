@@ -10,9 +10,10 @@ import java.util.Properties;
 
 public class PropertiesWriter {
     public static void main(String[] args) {
+
         writeProperties("myKey","myValue",true);
     }
-    private static final String PROPERTY_FILE_PATH = "src/test/resources/data.properties";
+    private static final String PROPERTY_FILE_PATH = "src/test/resources/resources.properties";
     public static void writeProperties(String key,String value,boolean cleanFile){
         Properties properties = new Properties();
         FileInputStream fis = null;

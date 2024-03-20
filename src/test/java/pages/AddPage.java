@@ -46,11 +46,10 @@ public class AddPage extends BasePage{
         emailField.sendKeys(contact.getEmail());
         addressField.sendKeys(contact.getAddress());
         descriptionField.sendKeys(contact.getDescription());
-        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions
-                        .visibilityOfElementLocated(By.xpath("//b[contains(text(),'Save')]")));
-        element.click();
-
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement saveButton = wait.until(ExpectedConditions
+                .visibilityOfElementLocated(By.xpath("//b[contains(text(),'Save')]")));
+        saveButton.click();
     }
 
 }
