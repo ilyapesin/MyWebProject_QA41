@@ -6,11 +6,7 @@ import io.qameta.allure.Allure;
 import model.Contact;
 import model.User;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.AddPage;
 import pages.ContactsPage;
@@ -18,10 +14,9 @@ import pages.LoginPage;
 import pages.MainPage;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class PhoneBookTest extends BaseTest {
-    @Test(description = "The test checks the empty field warning declaration.")
+    @Test(groups = "group1",description = "The test checks the empty field warning declaration.")
     public void registrationWithoutPassword() throws InterruptedException {
         Allure.description("User already exist. Login and add contact.!");
 
