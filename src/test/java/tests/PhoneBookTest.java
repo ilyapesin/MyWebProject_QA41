@@ -31,7 +31,7 @@ public class PhoneBookTest extends BaseTest {
                 .clickByRegistartionButton();
         boolean isAlertHandledt = AlertHandler.handAlert(alert, expectedString);
         Assert.assertTrue(isAlertHandledt);
-        Thread.sleep(5000);
+        Thread.sleep(3000);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class PhoneBookTest extends BaseTest {
         addPage.fillFormAndSave(contact);
         ContactsPage contactsPage = new ContactsPage(getDriver());
         Assert.assertTrue(contactsPage.getDataFromContactList(contact));
-        TakeScreen.takeScreenshot("screen");
+        TakeScreen.takeScreenshot(getDriver(),"screen");
         Thread.sleep(3000);
 
 
@@ -77,7 +77,7 @@ public class PhoneBookTest extends BaseTest {
                 .clickByRegistartionButton();
         Allure.step("Step 3");
         Assert.assertTrue(new ContactsPage(getDriver()).isElementPresent());
-        TakeScreen.takeScreenshot("screenreg");
+        TakeScreen.takeScreenshot(getDriver(),"screenreg");
     }
 
     @Test
